@@ -22,13 +22,14 @@
 
  @licend  The above is the entire license notice for the JavaScript code in this file
  */
-function initMenu(relPath,searchEnabled,serverSide,searchPage,search,treeview) {
+ function initMenu(relPath,searchEnabled,serverSide,searchPage,search,treeview) {
   function makeTree(data,relPath) {
     let result='';
     if ('children' in data) {
       result+='<ul>';
-      for (let i in data.children) {
-        let url;
+      for (let i in data.children) { 
+        if (data.children[i].text != "Related Pages" && data.children[i].text != "Namespaces") {
+          let url;
         const link = data.children[i].url;
         if (link.substring(0,1)=='^') {
           url = link.substring(1);
@@ -38,6 +39,8 @@ function initMenu(relPath,searchEnabled,serverSide,searchPage,search,treeview) {
         result+='<li><a href="'+url+'">'+
                                 data.children[i].text+'</a>'+
                                 makeTree(data.children[i],relPath)+'</li>';
+        }
+        
       }
       result+='</ul>';
     }
